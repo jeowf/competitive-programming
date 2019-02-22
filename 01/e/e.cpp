@@ -22,16 +22,16 @@ int main(int argc, char const *argv[]) {
 			chars[i] = 0;
 		
 
-		for (int i = 0; i < m.size(); ++i){
-			chars[m[i]]++;
+		for (int i = 0; i < n.size(); ++i){
+			chars[n[i]]++;
 		}
 
 		bool chain = true;
 		int aux = 0;
 
-		for (int i = 0; i < n.size(); ++i){
-			if (chars[n[i]] > 0){
-				chars[n[i]]--;
+		for (int i = 0; i < m.size(); ++i){
+			if (chars[m[i]] > 0){
+				chars[m[i]]--;
 				aux++;
 			} else {
 				chain = false;
