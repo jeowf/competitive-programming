@@ -5,11 +5,15 @@
 using namespace std;
 
 bool is_char( char x ){
+    
     return x != '.' && 
            x != ',' && 
            x != '!' &&
            x != ' ' &&
+           x != '\'' &&
            x != '?';
+
+    //return tolower(x) >= 61 && tolower(x) <= 122;
 }
 
 int main(int argc, char *argv[]){
@@ -24,20 +28,19 @@ int main(int argc, char *argv[]){
         bool p = true;
 
         while (i != f && s.size()>0){
-            if (is_char(s[i])){
-                if (is_char(s[f])){
+            if (is_char(s[i]) && is_char(s[f])){
 
-                    if (tolower(s[i]) != tolower(s[f])){
-                        p = false;
-                        break;
-                    }
-
-                    i++; f--;
-                } else {
-                    f--;
+                if (tolower(s[i]) != tolower(s[f])){
+                    p = false;
+                    break;
                 }
+
+                i++; f--;
             } else {
-                i++;
+                if (!is_char(s[i]))
+                    i++;
+                if (!is_char(s[f]))
+                    f--;
             }
         }
         
