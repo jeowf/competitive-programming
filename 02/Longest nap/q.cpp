@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 
 using namespace std;
@@ -6,83 +7,76 @@ using namespace std;
 int main(){
 
 	int n;
-
-	int v[(18-10)*60];
-
+	bool v[(18-10)*60];
 	int count = 1;
 
 	while (cin >> n){
 
 		for (int i = 0; i < (18-10)*60; ++i)
-			v[i] = -1;
+			v[i] = false;
 
 		string aux;
-		int max = -1;
-
-		for (int i = 0; i < n; ++i)
-		{
+		
+		for (int i = 0; i < n; ++i){
 			cin >> aux;
 			int h1 = stoi(aux.substr(0,2));
 			int m1 = stoi(aux.substr(3,2));
-
-			//cout << "[" <<h1 << ":" << m1 << "]" <<endl;
 
 			cin >> aux;
 			int h2 = stoi(aux.substr(0,2));
 			int m2 = stoi(aux.substr(3,2));
 
-			//cout << "[" <<h2 << ":" << m2 << "]" <<endl;
-
-
-			//cin >> aux;
         	getline(cin, aux);
 
-
-			//cout << aux;
-
 			int ini = (h1-10)*60 + m1;
-			v[ini] = (h2-10)*60 + m2;
+			int end = (h2-10)*60 + m2;
 
-			if (max == -1){
-				max = ini;
-			} else if (v[ini] - ini > v[max] - max){
-				max = ini;
-			}
-
-
+			for (int k = ini; k < end; ++k)
+				v[k] = true;
 		}
 
-		int prev = -1;
+		int max_i = -1, max_f = -1, prev_i = -1, prev_f = -1;
 
 		for (int i = 0; i < (18-10)*60; ++i) {
-			if (v[i] == -1 && prev == -1)
-				prev = i;
+			if (!v[i] && prev_i == -1)
+				prev_i = i;
 
-			if (v[i] != -1){
-				v[prev] = i;
-				prev = -1;
+			if (v[i] && prev_i != -1){
+				prev_f = i;
 
-				if (max == -1){
-					max = prev;
-				} else if (v[prev] - prev > v[max] - max){
-					max = prev;
+				if (max_i == -1){
+					max_i = prev_i;
+					max_f = prev_f;
+				} else if (prev_f - prev_i > max_f - max_i){
+					max_i = prev_i;
+					max_f = prev_f;
 				}
-
-				i = v[i] - 1;
+				
+				prev_i = -1;
 			}
 		}
 
-		if (prev != -1){
-			v[prev] = (18-10)*60;
+		if (prev_i != -1){
 
-			if (max == -1){
-				max = prev;
-			} else if (v[prev] - prev > v[max] - max){
-				max = prev;
+			prev_f = (18-10)*60;
+
+			if (max_i == -1){
+				max_i = prev_i;
+				max_f = prev_f;
+			} else if (prev_f - prev_i > max_f - max_i){
+				max_i = prev_i;
+				max_f = prev_f;
 			}
 		}
 
-		cout << max/60 + 10 << ":" << max%60 <<endl;
+		cout << "Day #" << count << ": the longest nap starts at " <<  
+		        setfill('0') << setw(2) << max_i/60 + 10 << ":" << setfill('0') << setw(2) << max_i%60 << 
+		        " and will last for ";
+		int duration = max_f - max_i;
+		if (duration >= 60)
+			cout << duration/60 << " hours and " << duration%60 << " minutes." << endl;
+		else 
+			cout << duration%60 << " minutes." << endl;
 
 		count++;
 

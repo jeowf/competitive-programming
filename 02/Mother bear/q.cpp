@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 
         bool p = true;
 
-        while (i != f && s.size()>0){
+        while (i < f){//} && s.size()>0){
             if (is_char(s[i]) && is_char(s[f])){
 
                 if (tolower(s[i]) != tolower(s[f])){
