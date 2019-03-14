@@ -45,7 +45,7 @@ int main(){
                     team_ref[p[e]] = end;
                     end = (end+1)%n_teams;
                 } else {
-                    teams[p[e]].push(e);
+                    teams[ team_ref[p[e]]].push(e);
                 }
 
 
