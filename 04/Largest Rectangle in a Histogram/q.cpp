@@ -1,39 +1,59 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct rect{
-	int height;
-	int width;
-};
 
 int main(){
 
-	rect histogram[100001];
- 
+	long long int histogram[100005];
 
 	int n;
 
 	while (cin >> n && n != 0){
+		int area, t;
+		int max = 0;
+		stack<int> aux;
+		//histogram[n] = 0;
 
-		for (int i = 0; i < n; ++i) {
+		for (int i = 0; i < n; ++i)	{
+			cin >> histogram[i];
+		}
 
-			int h;
-			cin >> h;
 
-			if (i == 0){
-				histogram[i].height = h;
-				histogram[i].width = 1;
+		for (int i = 0; i < n; ) {
+			//cin >> histogram[i];
+			
+			if (aux.empty() || histogram[aux.top()] <= histogram[i]){
+				aux.push(i++);
+
 			} else {
 
+				//while( !(aux.empty() || histogram[aux.top()] <= histogram[i]) ){
+				t = aux.top();
+				aux.pop();
+
+				if (aux.empty())
+					area = histogram[t] * i;
+				else
+					area = histogram[t] * (i - aux.top() - 1);
+
+				if (area > max) max = area;
+					
+				//}
 			}
-
-			cin >> histogram[i].height;
-			histogram[i].width = 1;
-
-			if (i > 0 && )
-
-		
 		}
+
+		while(!aux.empty()){
+			t = aux.top();
+			aux.pop();
+			if (aux.empty())
+				area = histogram[t] * n;
+			else
+				area = histogram[t] * (n - aux.top() - 1);
+
+			if (area > max) max = area;
+		}
+	
+		cout << max << endl;
 
 	}
 

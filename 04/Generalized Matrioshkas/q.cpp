@@ -20,7 +20,7 @@ int main(){
 		
 
 			if (x < 0){
-				if (!m.empty() && x < m.top())
+				if (!m.empty() && x <= m.top())
 					break;	
 				m.push(x);
 				sum.push(-1*x);
