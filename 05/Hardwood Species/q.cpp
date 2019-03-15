@@ -4,23 +4,37 @@ using namespace std;
 
 int main(){
 
-	map<string, int> florest;
-	int n = 0;
+	int cases;
 
-	string tree;
+	cin >> cases;
+	string g; // ignores first line
+	getline(cin, g);
 
-	while (getline(cin,tree)){
-		florest[tree]++;
-		n++;
-	}
+	int i = 0;
+	///for (int i = 0; i <= cases; ++i) {
+		
+		while(i < cases){
+			map<string, int> florest;
+			int n = 0;
 
-	//sort(florest, florest.begin(), florest.end());
+			string tree;
 
-	for (auto & e : florest){
+			while (getline(cin,tree) && tree != "\n"){
+				florest[tree]++;
+				n++;
+			}
 
-		cout << e.first << " ";
-		printf("%.4f\n", (float) 100*e.second/n );
-	}
+			for (auto & e : florest){
+				cout << e.first << " ";
+				printf("%.4f\n", (float) 100*e.second/n );
+			}
+			i++;
+		}
+		
+	
+	//}
+
+	
 
 
 
