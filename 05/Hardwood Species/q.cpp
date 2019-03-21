@@ -9,30 +9,43 @@ int main(){
 	cin >> cases;
 	string g; // ignores first line
 	getline(cin, g);
+	getline(cin, g);
 
-	int i = 0;
-	///for (int i = 0; i <= cases; ++i) {
-		
-		while(i < cases){
-			map<string, int> florest;
-			int n = 0;
+	//int i = 0;
 
-			string tree;
+	for (int i = 0; i < cases; i++){
 
-			while (getline(cin,tree) && tree != "\n"){
+		map<string, int> florest;
+		int n = 0;
+
+		string tree;
+
+		while (getline(cin,tree)){
+			if (tree.size()>0){
 				florest[tree]++;
-				n++;
+				n++;	
+			} else {
+				break;
 			}
+					
+		}
 
-			for (auto & e : florest){
+		for (auto & e : florest){
+			if(e.first.size() > 0){
 				cout << e.first << " ";
 				printf("%.4f\n", (float) 100*e.second/n );
 			}
-			i++;
+			
 		}
+		if (i < cases - 1)
+			cout << endl;
+		//i++;
+		
 		
 	
-	//}
+	}
+
+
 
 	
 
