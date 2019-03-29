@@ -50,7 +50,6 @@ int main(){
 			m3[a]++;
 		}
 
-
 		for (auto & e : p){
 			if (m1[e.first] ==1){
 				v1.push_back(e.first);
