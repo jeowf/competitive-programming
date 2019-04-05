@@ -18,10 +18,14 @@ int main(){
 		}
 
 		int acc = 1; // valor acumulado
-		int n_coins = 1;
+		int n_coins = 2;
+		if (q == 1)
+			n_coins = 1;
 
-		for (int i = 2; i <= q; ++i) {
-			if (acc < v[i]){
+		//int max
+
+		for (int i = 2; i < q; ++i) {
+			if (acc + v[i] < v[i + 1]){
 
 				n_coins++;
 				acc += v[i];
