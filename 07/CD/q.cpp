@@ -10,27 +10,25 @@ int N; // max  minutos
 int n_tracks;
 
 void search_sum(int i, int sum){
-	int local_sum = cds[i] + sum;
 
-	if (local_sum <= N){
-		part[i] = true;
+	if (sum > N)
+		return;
 
-		if ((N - local_sum) < (N - last_sum)){
-			last_sum = local_sum;
-			for (int j = 0; j < 20; ++j){
-				final_part[j] = part[j];
-			}
+	if (sum > last_sum){
+		last_sum = sum;
+		for (int j = 0; j < 20; ++j){
+			final_part[j] = part[j];
 		}
-
-		if (i < n_tracks)
-		search_sum(i+1, local_sum);		
 	}
 
+	if (i >= n_tracks)
+		return; 
 
-
+	part[i] = true;
+	search_sum(i+1, sum + cds[i]);
 	part[i] = false;
-	if (i < n_tracks)
-	search_sum(i+1, local_sum);
+	search_sum(i+1, sum);
+
 
 }
 
