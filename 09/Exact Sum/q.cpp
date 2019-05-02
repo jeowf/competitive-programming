@@ -23,7 +23,7 @@ int main(){
 
 		int bg, en;
 
-		while (first < last){
+		while (first < last-1){
 			int a = books[first];
 			int b = books[last-1];
 			if (a + b == M){
@@ -38,15 +38,15 @@ int main(){
 			} else{
 				first++;
 			}
-		}
+		}/*
 		if (f_case){
 			f_case = false;
 		}
 		else{
 			cout << endl << endl;
-		}
+		}*/
 
-		cout << "Peter should buy books whose prices are " << bg << " and " << en << ".";
+		cout << "Peter should buy books whose prices are " << bg << " and " << en << ".\n\n";
 
 	}
 
