@@ -93,7 +93,10 @@ int main(){
 
 					if (i == aux_cand.size() - 1){
 
+
+
 						answer.f_serial = candidates[j].i_serial + amount_aux_cand - 1;
+
 					}
 
 					j++;
@@ -102,7 +105,7 @@ int main(){
 						i++;
 
 				} else {
-					aux_cand[i].f_serial -= amount_cand;
+					//aux_cand[i].f_serial -= amount_cand;
 					j++;
 
 				}
