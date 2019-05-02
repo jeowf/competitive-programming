@@ -2,140 +2,55 @@
 
 using namespace std;
 
-struct Cand{
-	char state;
-	int i_serial;
-	int f_serial;
-	Cand(char c, int i, int f) : 
-	state(c), i_serial(i), f_serial(f) 
-	{ }
-};
-
-vector<Cand> candidates;
 
 int main(){
 
 
 	string s;
-	getline(cin, s);
-
-	char aux = '@';
-	int last_index = -1;
-	for(int i =0; i < s.size(); i++){
-		char actual = s[i];
-		if (actual != aux){
-			Cand cand(actual, i,i);
-			aux = actual;
-			candidates.push_back( cand );
-			last_index++;
-		} else {
-			candidates[last_index].f_serial = i;
-		}
-	}
-
-	// for (int i = 0; i < last_index+1; ++i)
-	// {
-	// 	cout << candidates[i].state << " " << (candidates[i].f_serial - candidates[i].i_serial + 1) << endl;
-	// }
+	cin >> s;
 
 	int queries;
 	cin >> queries;
 
-	getline(cin, s);
-
-
 	for (int c = 0; c < queries; c++){
-		vector<Cand> aux_cand;
-		getline(cin, s);
 
-		char aux = '@';
-		int aux_last_index = -1;
+		
+		int answer_ini = -1, answer_end = -1;
 
-		for(int i =0; i < s.size(); i++){
-			char actual = s[i];
-			if (actual != aux){
-				Cand cand(actual, i,i);
-				aux = actual;
-				aux_cand.push_back( cand );
-				aux_last_index++;
-			} else {
-				aux_cand[aux_last_index].f_serial = i;
-			}
-		}
+		string q;
+		cin >> q;
 
-		// for (int i = 0; i < aux_cand.size(); ++i)
-	 // {
-	 // 	cout << aux_cand[i].state << " " << (aux_cand[i].f_serial - aux_cand[i].i_serial + 1) << endl;
-	 // }
-	 // 	cout << endl;
+		int q_it = 0; // query iterator
+		int s_it = 0; // original word iterator
 
-		int i = 0, j = 0;
+		while (q_it < q.size() and s_it < s.size()){
 
-		Cand answer('a',-1,-1);
+			if (s[s_it] == q[q_it]){
 
-		for (; i < aux_cand.size() or j < candidates.size();){
-			
-			if (candidates[j].state == aux_cand[i].state){
-				
+				if (answer_ini == -1){
+					answer_ini = s_it;
 
 
-				int amount_cand = candidates[j].f_serial - candidates[j].i_serial + 1;
-				int amount_aux_cand = aux_cand[i].f_serial - aux_cand[i].i_serial + 1;
-
-//				cout << amount_aux_cand << " <=? " <<amount_cand << endl;
-
-
-				if (amount_aux_cand <= amount_cand){
-					//cout << "SIM \n";
-					if (answer.i_serial == -1){
-						answer.i_serial = candidates[j].i_serial;
-					}
-
-					if (i == aux_cand.size() - 1){
-
-
-
-						answer.f_serial = candidates[j].i_serial + amount_aux_cand - 1;
-
-					}
-
-					j++;
-
-					if (i < aux_cand.size() - 1)
-						i++;
-
-				} else {
-					//aux_cand[i].f_serial -= amount_cand;
-					j++;
-
+				} if (q_it == q.size() - 1){
+					answer_end = s_it;
 				}
 
-			} else {
-				j++;
-
+				s_it++;
+				q_it++;	
+			} else  {
+				s_it++;
 			}
 
-			
-
-			if (j == candidates.size()){
-				break;
-			}
 		}
 
-		//cout << "Case " << c+1 << ": \n";
-
-		if (answer.i_serial == -1 or answer.f_serial == -1){
+		if (answer_ini == -1 or answer_end == -1){
 			cout << "Not matched\n";
 		} else {
-			//deu certo
-			cout << "Matched " << answer.i_serial << " " << answer.f_serial << "\n";
+			cout << "Matched " << answer_ini << " " << answer_end << "\n";
 		}
 
 
 	}
-
-
-	//cout << s << endl << queries << endl;
 
 	return 0;
 }
