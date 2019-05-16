@@ -83,30 +83,3 @@ int main(){
 
 	return 0;
 }
-
-/*
-int main(){
-
-	string s;
-	int n_case = 1;
-	while (getline(cin, s) && s.size() > 0){
-		istringstream line(s);
-
-		int c = 0;
-		int r;
-		while ( line >> r){
-			start[c] = r-1;
-			refs[c++] = r-1;
-
-		}
-
-		a_min = 5000;
-		backtrack(0);
-
-		cout << "Case " << n_case++ << ": " << a_min << endl;
-	}
-
-
-	return 0;
-}
-*/
