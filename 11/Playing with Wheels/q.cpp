@@ -4,8 +4,8 @@ using namespace std;
 
 map<string, vector<string> > graph;
 
-string start;
-string goal;
+//string start;
+//string goal;
 
 string iter_s(string s, int k, int t){
 	//soma
@@ -78,6 +78,62 @@ int main(){
 				cin >> aux[j];
 
 			cant[aux] = 1;
+		}
+
+		//BFS
+
+		queue<string> ctrl;
+		map<string, int> level;
+		bool found = false;
+		int steps = 0;
+
+		if (st != go){
+
+			for (auto & e : graph[st])	{
+				if (!cant[e]){
+					ctrl.push(e);
+					cant[e] = 1;
+					level[e] = 1;
+					//cout << e << endl;
+				}
+			}
+
+			while (!ctrl.empty() and !found){
+
+
+				if (ctrl.front() == go){
+					found = true;
+					steps = level[ctrl.front()];
+					break;
+				} 
+
+				for (auto & e : graph[ctrl.front()]){
+					if (!cant[e]){
+						ctrl.push(e);
+						cant[e] = 1;
+						level[e] = level[ctrl.front()] + 1;
+					}
+				}
+
+				
+
+				cant[ctrl.front()] = 1;
+				ctrl.pop();
+
+				// steps++;
+			}
+
+		} else {
+			found = true;
+		}
+
+		
+		
+
+		if (found){
+			cout << steps << endl;
+		} else {
+			cout << "-1\n";
 		}
 		
 
