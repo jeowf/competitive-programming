@@ -2,8 +2,18 @@
 
 using namespace std;
 
-//const int G_SIZE = 200001;
+const int G_SIZE = 200001;
+typedef pair<int, int> node;
 
+class comp {
+	public :
+    bool operator() (node lhs, node rhs) {
+        if (lhs.second > rhs.second)
+			return true;
+
+		return false;
+    }
+};
 
 int main(){
 
@@ -12,9 +22,14 @@ int main(){
 
 	while(cin >> m >> n and (m!=0 and n!=0)){
 
-		map< int, vector<pair<int, int>> > graph;
+		vector<node> graph[G_SIZE];
+		bool mask[G_SIZE];
 
 		int totalCost = 0;
+
+		for (int i = 0; i < m; ++i) {
+			mask[i] = false;
+		}
 
 		for (int i = 0; i < n; i++){
 			int x, y, z;
@@ -26,36 +41,40 @@ int main(){
 		}
 
 
-
-
-
 		//prim (pq union find é chato)
-		priority_queue< pair<int, int> > pq;
-		map<int, bool> mask;
+		priority_queue< node, vector<node>, comp> pq;
+		
 		int minCost = 0;
 
 		mask[0] = 1;
-		for (auto & e : graph[0]) 
-			if (!mask[e.first])
+		for (auto & e : graph[0]) {
+			if (!mask[e.first]){
 				pq.push(e);
+				//minCost += e.second;
+			}
+		}
 		
 		while(!pq.empty()){
 
 			auto aux = pq.top();
 			pq.pop();
 
-			if (!mask[-aux.second]){
-				minCost -=  aux.first;
+			if (!mask[aux.first]){
+				minCost +=  aux.second;
 
-				mask[-aux.second] = 1;
-				for (auto & e : graph[-aux.second]) 
-					if (!mask[e.first])
+				mask[aux.first] = 1;
+				for (auto & e : graph[aux.first]) {
+					if (!mask[e.first]){
 						pq.push(e);
+						//minCost += e.second;
+
+					}
+				}
 			}
 
 		}
 
-		cout << (totalCost - minCost) << endl;
+		cout << (totalCost -  minCost) << endl;
 
 
 	}
