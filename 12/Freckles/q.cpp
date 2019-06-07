@@ -35,6 +35,11 @@ float distance(node a, node b){
 	return sqrt((a.x-b.x)*(a.x-b.x)+ (a.y-b.y)*(a.y-b.y));
 }
 
+node nodes[101];
+vector<edge> graph[101];
+bool mask[101];
+priority_queue< edge, vector<edge>, comp> pq;
+double minCost = 0;
 
 int main(){
 
@@ -43,8 +48,6 @@ int main(){
 
 	for (int t = 0; t < C; ++t) {
 
-		node nodes[101];
-		vector<edge> graph[101];
 
 
 		int n;
@@ -55,6 +58,10 @@ int main(){
 			cin >> x >> y;
 			node n(x,y);
 			nodes[i] = n;
+			mask[i] = false;
+			if (!graph[i].empty())
+				graph[i].clear();
+
 		}
 
 		for (int i = 0; i < n; ++i)	{
@@ -73,16 +80,13 @@ int main(){
 
 
 		//prim é vida
-		bool mask[101];
-
-		priority_queue< edge, vector<edge>, comp> pq;
-		
-		double minCost = 0;
+		minCost = 0;
 
 		mask[0] = 1;
 		for (auto & e : graph[0]) {
 			if (!mask[e.to]){
 				pq.push(e);
+				//cout << e.to << endl;
 				//minCost += e.second;
 			}
 		}
@@ -94,7 +98,6 @@ int main(){
 
 			if (!mask[aux.to]){
 				minCost +=  aux.d;
-
 				mask[aux.to] = 1;
 				for (auto & e : graph[aux.to]) {
 					if (!mask[e.to]){
@@ -108,7 +111,8 @@ int main(){
 		}
 
 		printf("%.2lf\n", minCost);
-
+		if (t!=C-1)
+			cout << endl;
 		
 	}
 
