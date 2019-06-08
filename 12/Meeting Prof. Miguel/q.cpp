@@ -2,7 +2,7 @@
 
 using namespace std;
 const int INF = 9999999;
-const int G_SIZE = 30;
+const int G_SIZE = 26;
 
 int main(){
 
@@ -31,17 +31,20 @@ int main(){
 			char a, b, c, d;
 			int f;
 			cin >> a >> b >> c >> d >> f;
-			int from = (char) a - 65;
-			int to = (char) b - 65;
+			int x = (int) c - 65;
+			int y = (int) d - 65;
+
+			//cout << x << " " << y << endl;
+
 			if (a == 'Y'){
-				Y[from][to] = f;
+				Y[x][y] = f;
 				if (b == 'B')
-					Y[to][from] = f;
+					Y[y][x] = f;
 
 			} else {
-				M[from][to] = f;
+				M[x][y] = f;
 				if (b == 'B')
-					M[to][from] = f;
+					M[y][x] = f;
 
 			}
 		}
@@ -52,8 +55,6 @@ int main(){
 		int startY = (int) a - 65;
 		int startM = (int) b - 65;
 
-		cout << startY << " " << startM << endl; 
-
 		for (int k = 0; k < G_SIZE; ++k){
 			for (int i = 0; i < G_SIZE; ++i){
 				for (int j = 0; j < G_SIZE; ++j){
@@ -63,20 +64,36 @@ int main(){
 			}
 		}
 
+
 		int city = -1;
 		int dis = INF;
-		for (int i = 0; i < G_SIZE; ++i){
-			if ((Y[startY][i] > 0 and Y[startY][i] < INF) and
-				(M[startM][i] > 0 and M[startM][i] < INF)){
-				int aux = Y[startY][i] + M[startM][i];
-				if (aux < dis){
-					city = i;
-					dis = aux;
-				}
-			}
+
+		for (int i = 0; i < G_SIZE; ++i)
+		{
+			Y[i][i] = M[i][i] = 0;
 		}
 
-		cout << dis << " " << city << endl;
+		for (int i = 0; i < G_SIZE; ++i){
+
+			if (Y[startY][i] + M[startM][i] < dis){
+				dis = Y[startY][i] + M[startM][i];
+				city = i;
+
+			}
+		}
+		
+		
+		if (city == -1){
+			cout << "You will never meet.\n";
+		} else {
+			cout << dis;
+			for (int i = 0; i < G_SIZE; ++i) {
+				if (Y[startY][i]+M[startM][i] == dis)
+					cout << " " << (char) (i + 65);
+
+			}
+			cout << endl;
+		}
 
 	}
 
